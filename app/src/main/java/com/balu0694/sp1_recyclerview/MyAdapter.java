@@ -4,10 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -16,7 +21,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<ListItem> listItems;
     private Context mContext;
 
-    public MyAdapter(List<ListItem> listItems, Context mContext) {
+    MyAdapter(List<ListItem> listItems, Context mContext) {
         this.listItems = listItems;
         this.mContext = mContext;
     }
@@ -31,10 +36,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItem listItem = listItems.get(position);
+        final ListItem listItem = listItems.get(position);
 
         holder.aHeadText.setText(listItem.getHead());
         holder.aDescText.setText(listItem.getDesc());
+
+        Picasso.get().load(listItem.getImgUrl()).into(holder.aImgView);
+
+        holder.aLinLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "You Clicked Item " + listItem.getHead(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -42,16 +56,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return listItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView aHeadText;
-        public TextView aDescText;
+        TextView aHeadText;
+        TextView aDescText;
+        ImageView aImgView;
+        LinearLayout aLinLay;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             aHeadText = itemView.findViewById(R.id.textViewHeading);
             aDescText = itemView.findViewById(R.id.textViewDesc);
+            aImgView = itemView.findViewById(R.id.imgView);
+            aLinLay = itemView.findViewById(R.id.linearLayout);
         }
     }
 }

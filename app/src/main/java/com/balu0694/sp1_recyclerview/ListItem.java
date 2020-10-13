@@ -1,20 +1,26 @@
 package com.balu0694.sp1_recyclerview;
 
-public class ListItem {
+class ListItem {
 
-    public String head;
-    public String desc;
+    private String head;
+    private String desc;
+    private String imgUrl;
 
-    public ListItem(String head, String desc) {
+    ListItem(String head, String desc, String imgUrl) {
         this.head = head;
         this.desc = desc;
+        this.imgUrl = imgUrl;
     }
 
-    public String getHead() {
+    String getHead() {
         return head;
     }
 
-    public String getDesc() {
+    String getDesc() {
         return desc;
+    }
+
+    String getImgUrl() {
+        return imgUrl;
     }
 }
